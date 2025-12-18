@@ -12,8 +12,8 @@ export const useWichtel = (
   const drawNext = () => {
     const eligible = participants.filter((p) => !p.hasReceived);
     if (eligible.length === 0) {
-      alert("Alle haben schon ein Geschenk! / Everyone has received a gift!");
-      return;
+      // Logic handled in UI (button disabled), but safe return here
+      return false;
     }
 
     setIsDrawing(true);

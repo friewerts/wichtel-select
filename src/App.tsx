@@ -1,13 +1,16 @@
 import { useParticipants } from './hooks/useParticipants';
 import { useWichtel } from './hooks/useWichtel';
+import { useModal } from './hooks/useModal';
 import { ParticipantInput } from './components/ParticipantInput';
 import { ParticipantList } from './components/ParticipantList';
 import { WichtelMachine } from './components/WichtelMachine';
+import { Modal } from './components/Modal';
 import { useEffect, useState } from 'react';
 
 function App() {
   const { participants, addParticipant, removeParticipant, markAsReceived, resetReceivedStatus } = useParticipants();
   const { currentWinner, isDrawing, drawNext } = useWichtel(participants, markAsReceived);
+  const { modalState, showModal, closeModal } = useModal();
 
   const eligibleCount = participants.filter(p => !p.hasReceived).length;
   
@@ -17,9 +20,27 @@ function App() {
       setSnowflakes(Array.from({ length: 50 }, (_, i) => i));
   }, []);
 
+  const handleReset = () => {
+    showModal(
+      'Reset All Progress?', 
+      'Are you sure you want to delete all winners and start over? This action cannot be undone.',
+      resetReceivedStatus,
+      true
+    );
+  };
+  
+  const handleDraw = () => {
+      const success = drawNext();
+      if (success === false) {
+          showModal('All Done!', 'Everyone has received a gift already! Merry Christmas! 🎄');
+      }
+  };
+
   return (
     <div className="min-h-screen bg-winter-gradient bg-fixed text-white relative overflow-hidden font-sans selection:bg-christmas-red selection:text-white">
        
+       <Modal {...modalState} onCancel={closeModal} />
+
        {/* Background Snowflakes */}
        {snowflakes.map(i => (
            <div 
@@ -65,11 +86,7 @@ function App() {
                 {participants.length > 0 && (
                    <div className="mt-auto pt-6 border-t border-white/10 text-center">
                        <button 
-                           onClick={() => {
-                               if(confirm('Are you sure you want to reset everything?')) {
-                                   resetReceivedStatus();
-                               }
-                           }}
+                           onClick={handleReset}
                            className="text-xs text-red-400 hover:text-red-300 transition-colors uppercase tracking-wider font-semibold"
                        >
                            Reset All Progress
@@ -85,7 +102,7 @@ function App() {
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-christmas-gold/20 rounded-full blur-[100px] -z-10"></div>
                      
                      <WichtelMachine 
-                        drawNext={drawNext} 
+                        drawNext={handleDraw} 
                         currentWinner={currentWinner} 
                         isDrawing={isDrawing} 
                         eligibleCount={eligibleCount}
