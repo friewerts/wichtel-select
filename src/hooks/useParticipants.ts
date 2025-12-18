@@ -42,5 +42,11 @@ export const useParticipants = () => {
       setParticipants(prev => prev.map(p => ({ ...p, hasReceived: false })));
   }
 
-  return { participants, addParticipant, removeParticipant, markAsReceived, resetReceivedStatus };
+  const toggleReceived = (id: string, status: boolean) => {
+    setParticipants(prev =>
+        prev.map(p => (p.id === id ? { ...p, hasReceived: status } : p))
+    );
+  };
+
+  return { participants, addParticipant, removeParticipant, markAsReceived, toggleReceived, resetReceivedStatus };
 };

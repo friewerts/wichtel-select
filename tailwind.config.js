@@ -20,12 +20,16 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'bounce-slow': 'bounce 3s infinite',
+        'bounce-slow': 'bounce-gentle 2s infinite',
         'shine': 'shine 2s infinite',
         'float': 'float 6s ease-in-out infinite',
         'snow': 'snow 10s linear infinite',
       },
       keyframes: {
+        'bounce-gentle': {
+            '0%, 100%': { transform: 'translateY(-10px)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+        },
         shine: {
           '0%': { left: '-100%' },
           '100%': { left: '100%' },

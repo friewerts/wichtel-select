@@ -8,7 +8,7 @@ import { Modal } from './components/Modal';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const { participants, addParticipant, removeParticipant, markAsReceived, resetReceivedStatus } = useParticipants();
+  const { participants, addParticipant, removeParticipant, markAsReceived, toggleReceived, resetReceivedStatus } = useParticipants();
   const { currentWinner, isDrawing, drawNext } = useWichtel(participants, markAsReceived);
   const { modalState, showModal, closeModal } = useModal();
 
@@ -81,7 +81,7 @@ function App() {
                 </div>
 
                 <ParticipantInput onAdd={addParticipant} />
-                <ParticipantList participants={participants} onRemove={removeParticipant} />
+                <ParticipantList participants={participants} onRemove={removeParticipant} onToggleReceived={toggleReceived} />
                 
                 {participants.length > 0 && (
                    <div className="mt-auto pt-6 border-t border-white/10 text-center">

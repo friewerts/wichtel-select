@@ -4,9 +4,10 @@ import type { Participant } from '../types';
 interface Props {
   participants: Participant[];
   onRemove: (id: string) => void;
+  onToggleReceived: (id: string, status: boolean) => void;
 }
 
-export const ParticipantList: React.FC<Props> = ({ participants, onRemove }) => {
+export const ParticipantList: React.FC<Props> = ({ participants, onRemove, onToggleReceived }) => {
   if (participants.length === 0) {
     return (
       <div className="text-center py-12 text-white/20 border-2 border-dashed border-white/5 rounded-2xl">
@@ -41,9 +42,14 @@ export const ParticipantList: React.FC<Props> = ({ participants, onRemove }) => 
 
             <div className="flex items-center gap-2">
               {p.hasReceived && (
-                <span className="text-xs px-2 py-1 bg-white/5 rounded-md text-white/40">
+                <button
+                   onClick={() => onToggleReceived(p.id, false)}
+                   className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 rounded-md text-white/40 hover:text-christmas-gold transition-colors flex items-center gap-1 group/undo"
+                   title="Reset status"
+                >
                   Received
-                </span>
+                  <span className="hidden group-hover/undo:inline">↺</span>
+                </button>
               )}
               {!p.hasReceived && (
                   <button
