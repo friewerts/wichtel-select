@@ -15,46 +15,58 @@ export const WichtelMachine: React.FC<Props> = ({
   eligibleCount,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center py-8">
-      <div className="mb-8 h-48 w-full max-w-sm flex items-center justify-center perspective">
-        {/* Placeholder for animation logic */}
+    <div className="flex flex-col items-center justify-center w-full h-full">
+      <div className="flex-1 flex items-center justify-center w-full perspective-1000">
+        
         {isDrawing ? (
-            <div className="text-center animate-pulse">
-                <span className="text-6xl">🎁</span>
-                <p className="mt-4 text-christmas-gold font-bold text-xl">Wichtel sucht...</p>
+            <div className="text-center relative">
+                <div className="w-32 h-32 rounded-full border-4 border-christmas-gold/30 border-t-christmas-gold animate-spin mb-8 mx-auto"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl">🎁</div>
+                <p className="text-xl text-christmas-gold font-light animate-pulse tracking-widest uppercase">
+                    Selecting...
+                </p>
             </div>
         ) : currentWinner ? (
-          <div className="bg-gradient-to-br from-christmas-red to-[#800000] p-8 rounded-2xl shadow-xl border-4 border-christmas-gold transform transition-all animate-bounce-slow text-center w-full">
-            <p className="text-christmas-gold font-christmas text-2xl mb-2">Das Geschenk geht an:</p>
-            <h2 className="text-4xl font-bold text-white break-words">{currentWinner.name}</h2>
+          <div className="text-center animate-bounce-slow transform transition-all duration-500 hover:scale-105">
+            <div className="inline-block mb-4 p-4 bg-gradient-to-br from-christmas-red to-rose-600 rounded-full shadow-[0_0_50px_rgba(225,29,72,0.4)]">
+                 <span className="text-5xl">🎅</span>
+            </div>
+            <p className="text-christmas-gold font-christmas text-3xl mb-4">The gift goes to</p>
+            <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-400">
+                {currentWinner.name}
+            </h2>
           </div>
         ) : (
-          <div className="text-center opacity-50">
-            <span className="text-6xl grayscale">🎅</span>
-            <p className="mt-2 text-slate-500">Bereit zum Wichteln</p>
+          <div className="text-center opacity-30 hover:opacity-100 transition-opacity duration-500">
+            <span className="text-8xl block mb-6 filter drop-shadow-lg">🎄</span>
+            <p className="text-xl font-light tracking-wider">READY TO DRAW</p>
           </div>
         )}
       </div>
 
-      <button
-        onClick={drawNext}
-        disabled={isDrawing || eligibleCount === 0}
-        className="group relative px-8 py-4 bg-christmas-red text-white text-xl font-bold rounded-full shadow-lg hover:bg-[#a00c12] active:transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all overflow-hidden"
-      >
-        <span className="relative z-10 flex items-center gap-2">
-            {isDrawing ? 'Mische...' : 'Wer ist dran?'}
-            {!isDrawing && <span className="text-2xl">✨</span>}
-        </span>
-        {/* Shine effect */}
-        <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
-      </button>
-      
-      {eligibleCount === 0 && (
-          <p className="mt-4 text-christmas-green font-semibold">Alle Geschenke verteilt! Frohe Weihnachten! 🎄</p>
-      )}
-      {eligibleCount > 0 && !isDrawing && !currentWinner && (
-          <p className="mt-4 text-slate-500 text-sm">{eligibleCount} Geschenke warten noch...</p>
-      )}
+      <div className="mt-12 w-full max-w-xs z-10">
+          {eligibleCount > 0 ? (
+             <button
+                onClick={drawNext}
+                disabled={isDrawing}
+                className="w-full py-5 bg-gradient-to-r from-christmas-red to-rose-600 text-white text-xl font-bold rounded-2xl shadow-lg hover:shadow-rose-600/30 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all duration-300 relative overflow-hidden group"
+            >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                {isDrawing ? 'Searching...' : 'Draw Next Person'}
+            </button>
+          ) : (
+             <div className="text-center p-6 bg-white/5 rounded-2xl border border-christmas-green/20">
+                 <h3 className="text-2xl text-christmas-green font-bold mb-2">Complete!</h3>
+                 <p className="text-sm text-gray-400">All gifts have been assigned.</p>
+             </div>
+          )}
+          
+          {eligibleCount > 0 && !isDrawing && (
+              <p className="mt-6 text-center text-white/30 text-sm">
+                  {eligibleCount} {eligibleCount === 1 ? 'person' : 'people'} remaining
+              </p>
+          )}
+      </div>
     </div>
   );
 };

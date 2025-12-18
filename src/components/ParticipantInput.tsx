@@ -16,18 +16,18 @@ export const ParticipantInput: React.FC<Props> = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md flex gap-2">
+    <form onSubmit={handleSubmit} className="relative w-full group">
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Name des Teilnehmers..."
-        className="flex-1 px-4 py-2 rounded-lg border-2 border-christmas-green/20 focus:border-christmas-red focus:outline-none bg-white text-slate-800 placeholder-slate-400 shadow-sm transition-colors"
+        placeholder="Enter participant name..."
+        className="w-full pl-6 pr-24 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-christmas-red/50 focus:border-christmas-red/50 transition-all shadow-inner"
       />
       <button
         type="submit"
         disabled={!name.trim()}
-        className="px-6 py-2 bg-christmas-green text-snow-white rounded-lg font-semibold shadow-md hover:bg-[#1e3421] active:transform active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute right-2 top-2 bottom-2 px-6 bg-gradient-to-r from-christmas-green to-emerald-600 hover:from-emerald-500 hover:to-emerald-400 text-white rounded-xl font-medium shadow-lg hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
       >
         Add
       </button>

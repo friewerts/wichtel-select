@@ -9,53 +9,51 @@ interface Props {
 export const ParticipantList: React.FC<Props> = ({ participants, onRemove }) => {
   if (participants.length === 0) {
     return (
-      <div className="text-center text-slate-500 italic mt-8">
-        Noch keine Teilnehmer eingetragen. <br />
-        No participants yet.
+      <div className="text-center py-12 text-white/20 border-2 border-dashed border-white/5 rounded-2xl">
+        <p>No participants yet.</p>
+        <p className="text-sm mt-1">Add someone to start the magic!</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-md mt-6 space-y-2">
-      <h3 className="text-xl font-christmas text-christmas-red mb-4 text-center">
-        Teilnehmerliste ({participants.length})
-      </h3>
-      <ul className="space-y-2 max-h-[30vh] overflow-y-auto px-2">
+    <div className="flex-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+      <ul className="space-y-3">
         {participants.map((p) => (
           <li
             key={p.id}
-            className={`flex justify-between items-center p-3 rounded-lg shadow-sm border ${
+            className={`group flex justify-between items-center p-4 rounded-xl border transition-all duration-300 ${
               p.hasReceived
-                ? 'bg-gray-100 text-gray-400 border-gray-200'
-                : 'bg-white text-slate-800 border-christmas-green/10'
+                ? 'bg-white/5 border-transparent opacity-50'
+                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 hover:translate-x-1'
             }`}
           >
-            <span className="font-medium truncate">{p.name}</span>
+             <div className="flex items-center gap-3">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                    p.hasReceived ? 'bg-gray-700 text-gray-500' : 'bg-gradient-to-br from-christmas-gold to-orange-500 text-black shadow-lg shadow-orange-500/20'
+                }`}>
+                    {p.name.charAt(0).toUpperCase()}
+                </div>
+                <span className={`font-medium ${p.hasReceived ? 'line-through text-white/30' : 'text-white'}`}>
+                    {p.name}
+                </span>
+            </div>
+
             <div className="flex items-center gap-2">
               {p.hasReceived && (
-                <span className="text-xs px-2 py-1 bg-gray-200 rounded-full">
-                  Hat schon
+                <span className="text-xs px-2 py-1 bg-white/5 rounded-md text-white/40">
+                  Received
                 </span>
               )}
-              <button
-                onClick={() => onRemove(p.id)}
-                className="text-gray-400 hover:text-christmas-red transition-colors p-1"
-                aria-label="Remove participant"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+              {!p.hasReceived && (
+                  <button
+                    onClick={() => onRemove(p.id)}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
+                    aria-label="Remove participant"
+                  >
+                    ×
+                  </button>
+              )}
             </div>
           </li>
         ))}
