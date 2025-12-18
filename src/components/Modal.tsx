@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   isOpen: boolean;
   title: string;
-  message: string;
+  message: React.ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
   isConfirm?: boolean;
@@ -21,19 +21,19 @@ export const Modal: React.FC<Props> = ({ isOpen, title, message, onConfirm, onCa
       />
       
       {/* Modal Content */}
-      <div className="relative w-full max-w-md bg-[#0f172a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-float">
+      <div className="relative w-full max-w-md bg-[#0f172a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-100 animate-float max-h-[80vh] flex flex-col">
         {/* Header */}
-        <div className="bg-gradient-to-r from-christmas-red to-rose-700 p-4">
+        <div className="bg-gradient-to-r from-christmas-red to-rose-700 p-4 shrink-0">
           <h3 className="text-xl font-bold text-white font-christmas tracking-wide">{title}</h3>
         </div>
         
         {/* Body */}
-        <div className="p-6">
-          <p className="text-gray-300 leading-relaxed">{message}</p>
+        <div className="p-6 overflow-y-auto custom-scrollbar text-gray-300 leading-relaxed">
+          {message}
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-white/5 flex flex-row-reverse gap-3">
+        <div className="p-4 bg-white/5 flex flex-row-reverse gap-3 shrink-0">
           {isConfirm ? (
             <>
               <button

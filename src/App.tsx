@@ -5,6 +5,7 @@ import { ParticipantInput } from './components/ParticipantInput';
 import { ParticipantList } from './components/ParticipantList';
 import { WichtelMachine } from './components/WichtelMachine';
 import { Modal } from './components/Modal';
+import { ImpressumContent, PrivacyContent } from './components/LegalContent';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -112,8 +113,12 @@ function App() {
 
           </main>
           
-          <footer className="mt-auto pt-16 text-white/30 text-sm font-light">
-             Refined for the Holiday Season 🎄
+          <footer className="mt-auto pt-16 text-white/30 text-xs font-light flex flex-col items-center gap-2">
+             <p>Refined for the Holiday Season 🎄</p>
+             <div className="flex gap-4 mt-2">
+                 <button onClick={() => showModal('Impressum', <ImpressumContent />)} className="hover:text-white/60 transition-colors">Impressum</button>
+                 <button onClick={() => showModal('Datenschutzerklärung', <PrivacyContent />)} className="hover:text-white/60 transition-colors">Datenschutz</button>
+             </div>
           </footer>
        </div>
     </div>

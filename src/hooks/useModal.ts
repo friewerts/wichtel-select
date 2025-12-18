@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 interface ModalState {
   isOpen: boolean;
   title: string;
-  message: string;
+  message: React.ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
   isConfirm?: boolean; // If true, show Confirm/Cancel buttons. If false, just OK/Close.
@@ -16,7 +16,7 @@ export const useModal = () => {
     message: '',
   });
 
-  const showModal = useCallback((title: string, message: string, onConfirm?: () => void, isConfirm = false) => {
+  const showModal = useCallback((title: string, message: React.ReactNode, onConfirm?: () => void, isConfirm = false) => {
     setModalState({
       isOpen: true,
       title,
