@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-snow-white text-slate-800 antialiased;
+  }
+}
+
+/* Optional: Add custom snow animation here if not in standard tailwind config */
+@keyframes snowfall {
+  0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+}
